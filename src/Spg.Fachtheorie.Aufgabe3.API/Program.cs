@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Spg.Fachtheorie.Aufgabe2.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 string connectionString = "Data Source = C:\\Scratch\\Aufgabe3_RealApp.db";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -12,6 +15,8 @@ builder.Services.AddDbContext<Aufgabe2Database>(options => options.UseSqlite(con
 
 // TODO: Services im DI-Container resgistrieren
 // ...
+builder.Services.AddScoped<ApplicationService>();
+
 
 var app = builder.Build();
 
@@ -38,3 +43,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
+
+public partial class Program { }
